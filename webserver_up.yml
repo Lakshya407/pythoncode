@@ -1,0 +1,19 @@
+---
+- name: Upload new code and restart the service
+  hosts: 172.26.134.147
+  vars:
+    -app: apache2
+
+  tasks:
+  -name: Place custom HTML file
+  copy: 
+    src: /var/lib/jenkins/workspace/git-project/index.html
+    dest: /var/www/html/index.html
+  become: true
+
+  -name: Start the service 
+   service:
+    name: apache2
+    state: started
+    enable: yes
+  become: true
